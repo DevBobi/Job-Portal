@@ -8,10 +8,3 @@ const firebaseConfig = {
 };
 
 export default firebaseConfig;
-
-apiKey: "AIzaSyA_PSxVb1kGXGGPbtT-YpIZ9zQy7eFLUpU",
-    authDomain: "job-portal-9cccd.firebaseapp.com",
-        projectId: "job-portal-9cccd",
-            storageBucket: "job-portal-9cccd.appspot.com",
-                messagingSenderId: "182877086512",
-                    appId: "1:182877086512:web:97af5a5e8607e9cdd59ef5",

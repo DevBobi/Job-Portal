@@ -6,11 +6,14 @@ import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import { Container } from '@mui/material';
 import Registration from '../Registration/Registration';
+import Axios from '../../Utilites/axios';
+import { useNavigate } from "react-router-dom";
 
 const login = "https://techforing.com/tfimg/logo.png";
-
 export default function Login() {
     const [formField, setFormField] = React.useState(false);
+
+    const navigate = useNavigate();
 
     const formControl = e => {
         console.log(e)
@@ -22,15 +25,43 @@ export default function Login() {
         }
     }
 
+    const [loginData, setLoginData] = React.useState({})
 
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        const data = new FormData(event.currentTarget);
-        // eslint-disable-next-line no-console
-        console.log({
-            email: data.get('email'),
-            password: data.get('password'),
-        });
+    // const location = useLocation();
+    // const navigate = useNavigate();
+
+    const handleOnChange = e => {
+        const field = e.target.name;
+        const value = e.target.value;
+        const newLoginData = { ...loginData };
+        newLoginData[field] = value;
+        setLoginData(newLoginData)
+    }
+    const [user, setUser] = React.useState(null);
+    const [loading, setLoading] = React.useState(false);
+
+    const handleLoginSubmit = async e => {
+        e.preventDefault();
+        setLoading(false);
+        const fromData = new FormData();
+        fromData.set("email", loginData.email)
+        fromData.set("password", loginData.password)
+        try {
+            setLoading(true)
+            const result = await Axios.post('/login/', fromData);
+            setUser(result.data)
+            console.log(result.data.refresh);
+            console.log(result.data.access);
+            console.log(result.data.user);
+            localStorage.setItem('accessToken', result.data.access);
+            localStorage.setItem('refreshToken', result.data.refresh);
+            localStorage.setItem('user', result.data.user);
+            navigate('/jobs');
+        } catch (error) {
+            console.log(error);
+        } finally {
+            setLoading(false);
+        }
     };
 
     return (
@@ -86,14 +117,14 @@ export default function Login() {
                                         <Typography container variant="h6" sx={{ fontSize: 15, fontWeight: "normal", color: "#555555" }}>
                                             Please Sign In
                                         </Typography>
-                                        <Box component="form" onSubmit='' noValidate sx={{ mt: 1 }}>
+                                        <Box component="form" onSubmit={handleLoginSubmit} noValidate sx={{ mt: 1 }}>
                                             <TextField
                                                 margin="normal"
                                                 required
                                                 fullWidth
                                                 id="email"
                                                 label="Email"
-                                                onChange='{handleOnChange}'
+                                                onChange={handleOnChange}
                                                 name="email"
                                                 autoComplete="email"
                                                 autoFocus
@@ -104,7 +135,7 @@ export default function Login() {
                                                 fullWidth
                                                 name="password"
                                                 label="Password"
-                                                onChange='{handleOnChange}'
+                                                onChange={handleOnChange}
                                                 type="password"
                                                 id="password"
                                                 autoComplete="current-password"
@@ -115,7 +146,11 @@ export default function Login() {
                                                 color="info"
                                                 sx={{ mt: 3, mb: 2 }}
                                             >
-                                                Sign In
+                                                {loading ?
+                                                    "Loading..."
+                                                    :
+                                                    "Sign In"
+                                                }
                                             </Button>
                                         </Box>
                                     </Box>

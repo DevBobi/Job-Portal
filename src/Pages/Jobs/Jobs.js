@@ -3,9 +3,11 @@ import * as React from 'react';
 import { styled } from '@mui/material/styles';
 import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 import TableRow from '@mui/material/TableRow';
-
 import { Box } from '@mui/system';
-import { Paper, Table, TableBody, TableContainer, TableHead } from '@mui/material';
+import { Button, Paper, Table, TableBody, TableContainer, TableHead } from '@mui/material';
+import DeleteIcon from '@mui/icons-material/Delete';
+import ModeEditIcon from '@mui/icons-material/ModeEdit';
+import VisibilityIcon from '@mui/icons-material/Visibility';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -13,7 +15,7 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
         color: theme.palette.common.white,
     },
     [`&.${tableCellClasses.body}`]: {
-        fontSize: 14,
+        fontSize: 15,
     },
 }));
 
@@ -77,7 +79,26 @@ const Jobs = () => {
                                     <StyledTableCell >{row.protein}</StyledTableCell>
                                     <StyledTableCell >{row.protein}</StyledTableCell>
                                     <StyledTableCell >{row.protein}</StyledTableCell>
-                                    <StyledTableCell align="right">{row.protein}</StyledTableCell>
+                                    <StyledTableCell align="right">
+                                        <Button
+                                            // onClick={() => handleDelete(row?._id)}
+                                            size="small"
+                                            color="success">
+                                            <ModeEditIcon />
+                                        </Button>
+                                        <Button
+                                            // onClick={() => handleDelete(row?._id)}
+                                            size="small"
+                                            color="error">
+                                            <DeleteIcon />
+                                        </Button>
+                                        <Button
+                                            // onClick={() => handleDelete(row?._id)}
+                                            size="small"
+                                            color="info">
+                                            <VisibilityIcon />
+                                        </Button>
+                                    </StyledTableCell>
                                 </StyledTableRow>
                             ))}
                         </TableBody>

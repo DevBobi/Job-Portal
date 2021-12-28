@@ -34,9 +34,9 @@ const Registration = () => {
         Object.keys(loginData).forEach((key) => {
             fromData.append(key, loginData[key]);
         });
-
         try {
             const result = await Axios.post('/register/', fromData);
+            alert("Successfully User Created")
             console.log(result);
         } catch (error) {
             console.log(error);

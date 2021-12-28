@@ -39,7 +39,7 @@ export default function Login() {
                 <Grid item xs={12} md={6} elevation={6} >
                     <Box
                         sx={{
-                            mt: 12,
+                            my: 8,
                             display: 'flex',
                             flexDirection: 'column',
                             alignItems: 'center',

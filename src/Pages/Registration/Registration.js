@@ -8,18 +8,49 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
+import axios from 'axios';
 
 const Registration = () => {
     const [gender, setGender] = React.useState('');
+    const [loginData, setLoginData] = React.useState('');
+    const [success, setSuccess] = React.useState(false);
 
     const handleChange = (event) => {
         setGender(event.target.value);
     };
 
+    const handleOnBlur = e => {
+        const field = e.target.name;
+        const value = e.target.value;
+        const newLoginData = { ...loginData, gender };
+        newLoginData[field] = value;
+        setLoginData(newLoginData)
+        // console.log(newLoginData)
+    }
+
+    const handleRegisterSubmit = e => {
+        if (loginData.password !== loginData.password2) {
+            alert("Didn't matched password");
+            return
+        }
+        axios.post('https://tf-practical.herokuapp.com/api/register/', loginData, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify(loginData)
+        })
+            .then(res => console.log(res))
+            .catch(err => console.log("Error", err))
+
+        console.log(loginData)
+        e.preventDefault();
+    }
+
+
     return (
         <>
             <Box
-
                 sx={{
                     display: 'flex',
                     flexDirection: 'column',
@@ -36,16 +67,17 @@ const Registration = () => {
                 <Typography container variant="h6" sx={{ fontSize: 15, fontWeight: "normal", color: "#555555" }}>
                     Please Register
                 </Typography>
-                <Box component="form" noValidate onSubmit='{handleSubmit}' sx={{ mt: 3 }}>
+                <Box component="form" noValidate onSubmit={handleRegisterSubmit} sx={{ mt: 3 }}>
                     <Grid container spacing={2}>
                         <Grid item xs={6} sm={6}>
                             <TextField
                                 autoComplete="given-name"
-                                name="firstName"
+                                name="full_name"
                                 required
                                 fullWidth
-                                id="firstName"
-                                label="First Name"
+                                id="userName"
+                                label="Your Name"
+                                onBlur={handleOnBlur}
                                 autoFocus
                             />
                         </Grid>
@@ -55,20 +87,23 @@ const Registration = () => {
                                 fullWidth
                                 id="Number"
                                 label="Number"
-                                name="number"
+                                name="phone_number"
                                 type="tel"
-                                autoComplete="number"
+                                onBlur={handleOnBlur}
+                                autoFocus
                             />
                         </Grid>
                         <Grid item xs={6} sm={6}>
                             <TextField
                                 autoComplete="given-name"
-                                name="date"
+                                name="birthDate"
                                 type="date"
                                 required
                                 fullWidth
                                 id="date"
+                                views={["year", "month", "day"]}
                                 label="Date of Birth"
+                                onBlur={handleOnBlur}
                                 autoFocus
                             />
                         </Grid>
@@ -80,12 +115,12 @@ const Registration = () => {
                                         labelId="demo-simple-select-label"
                                         id="demo-simple-select"
                                         value={gender}
-                                        label="Gender"
+                                        label="Age"
                                         onChange={handleChange}
                                     >
-                                        <MenuItem value={'male'}>Male</MenuItem>
-                                        <MenuItem value={'female'}>Female</MenuItem>
-                                        <MenuItem value={'other'}>Other</MenuItem>
+                                        <MenuItem value='Male'>Male</MenuItem>
+                                        <MenuItem value='Female'>Female</MenuItem>
+                                        <MenuItem value='other'>Other</MenuItem>
                                     </Select>
                                 </FormControl>
                             </Box>
@@ -98,6 +133,7 @@ const Registration = () => {
                                 label="Email Address"
                                 name="email"
                                 autoComplete="email"
+                                onBlur={handleOnBlur}
                             />
                         </Grid>
                         <Grid item xs={6} sm={6}>
@@ -109,6 +145,7 @@ const Registration = () => {
                                 type="password"
                                 id="password"
                                 autoComplete="new-password"
+                                onBlur={handleOnBlur}
                             />
                         </Grid>
                         <Grid item xs={6} sm={6}>
@@ -118,8 +155,9 @@ const Registration = () => {
                                 name="password2"
                                 label="Confirm Password"
                                 type="password"
-                                id="password"
+                                id="password2"
                                 autoComplete="new-password"
+                                onBlur={handleOnBlur}
                             />
                         </Grid>
 

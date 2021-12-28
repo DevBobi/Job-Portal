@@ -5,8 +5,9 @@ import {
   Routes,
   Route
 } from "react-router-dom";
-import Login from './Pages/Shared/Login/Login';
-import Registration from './Pages/Shared/Registration/Registration';
+import Login from './Pages/Login/Login';
+import Registration from './Pages/Registration/Registration';
+
 
 function App() {
   return (

@@ -8,43 +8,35 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
-import Axios from '../../Utilites/axios';
+import useAuth from '../../Hooks/useAuth'
 
+const Registration = ({ setFormField }) => {
+    const [loginData, setLoginData] = React.useState({ gender: 'Male' });
+    const { loading, error, signup } = useAuth()
 
-const Registration = () => {
-    const [gender, setGender] = React.useState('');
-    const [loginData, setLoginData] = React.useState('');
+    const handleChange = e => {
+        setLoginData({ ...loginData, [e.target.name]: e.target.value })
+    }
 
-    const handleChange = (event) => {
-        setGender(event.target.value);
-    };
-
-    const handleOnBlur = (e) => {
-        const field = e.target.name;
-        const value = e.target.value;
-        const newLoginData = { ...loginData, gender };
-        newLoginData[field] = value;
-        setLoginData(newLoginData);
-    };
-
-    const handleRegisterSubmit = async (e) => {
+    const handleRegisterSubmit = (e) => {
         e.preventDefault();
-
         const fromData = new FormData();
         Object.keys(loginData).forEach((key) => {
             fromData.append(key, loginData[key]);
         });
-        try {
-            const result = await Axios.post('/register/', fromData);
-            alert("Successfully User Created")
-            console.log(result);
-        } catch (error) {
-            console.log(error);
-        }
+        fromData.delete('password2')
+        signup(fromData);
+        !error && setFormField('signin')
     };
 
     return (
         <>
+            <Typography sx={{
+                color: 'red',
+                mt: '15px'
+            }} component='h1'>
+                {error}
+            </Typography>
             <Box
                 sx={{
                     display: 'flex',
@@ -79,7 +71,7 @@ const Registration = () => {
                                 fullWidth
                                 id='userName'
                                 label='Your Name'
-                                onBlur={handleOnBlur}
+                                onBlur={handleChange}
                                 autoFocus
                             />
                         </Grid>
@@ -91,7 +83,7 @@ const Registration = () => {
                                 label='Number'
                                 name='phone_number'
                                 type='tel'
-                                onBlur={handleOnBlur}
+                                onBlur={handleChange}
                                 autoFocus
                             />
                         </Grid>
@@ -105,20 +97,22 @@ const Registration = () => {
                                 id='date'
                                 views={['year', 'month', 'day']}
                                 label='Date of Birth'
-                                onBlur={handleOnBlur}
+                                onBlur={handleChange}
                                 autoFocus
                             />
                         </Grid>
                         <Grid item xs={6} sm={6}>
                             <Box sx={{ minWidth: 120 }}>
                                 <FormControl fullWidth>
-                                    <InputLabel id='demo-simple-select-label'>
+                                    <InputLabel id='select-label'>
                                         Gender
                                     </InputLabel>
                                     <Select
-                                        labelId='demo-simple-select-label'
-                                        id='demo-simple-select'
-                                        value={gender}
+                                        defaultValue={'Male'}
+                                        labelId='select-label'
+                                        id='select'
+                                        name='gender'
+                                        value={loginData.gender}
                                         label='Age'
                                         onChange={handleChange}>
                                         <MenuItem value='Male'>Male</MenuItem>
@@ -138,7 +132,7 @@ const Registration = () => {
                                 label='Email Address'
                                 name='email'
                                 autoComplete='email'
-                                onBlur={handleOnBlur}
+                                onBlur={handleChange}
                             />
                         </Grid>
                         <Grid item xs={6} sm={6}>
@@ -150,7 +144,7 @@ const Registration = () => {
                                 type='password'
                                 id='password'
                                 autoComplete='new-password'
-                                onBlur={handleOnBlur}
+                                onBlur={handleChange}
                             />
                         </Grid>
                         <Grid item xs={6} sm={6}>
@@ -162,7 +156,7 @@ const Registration = () => {
                                 type='password'
                                 id='password2'
                                 autoComplete='new-password'
-                                onBlur={handleOnBlur}
+                                onBlur={handleChange}
                             />
                         </Grid>
                     </Grid>
@@ -170,7 +164,7 @@ const Registration = () => {
                         type='submit'
                         variant='contained'
                         sx={{ mt: 3, mb: 2 }}>
-                        Sign Up
+                        {loading ? 'loading...' : 'Sign Up'}
                     </Button>
                 </Box>
             </Box>

@@ -1,4 +1,3 @@
-import logo from './logo.svg';
 import './App.css';
 import {
   BrowserRouter as Router,
@@ -8,9 +7,15 @@ import {
 import Login from './Pages/Login/Login';
 import Registration from './Pages/Registration/Registration';
 import Jobs from './Pages/Jobs/Jobs';
+import PrivateRoute from './Pages/Shared/PrivateRoute/PrivateRoute';
+import { useEffect } from 'react';
+import useAuth from './Hooks/useAuth';
 
 
 function App() {
+  const { isLoggedIn, user } = useAuth()
+  useEffect(() => isLoggedIn(), [])
+
   return (
     <div className="App">
       <Router>
@@ -21,7 +26,9 @@ function App() {
           </Route>
           <Route path="/register" element={<Registration />}>
           </Route>
-          <Route path="/jobs" element={<Jobs />}>
+          <Route path="/jobs" element={<PrivateRoute>
+            <Jobs />
+          </PrivateRoute>}>
           </Route>
         </Routes>
       </Router>

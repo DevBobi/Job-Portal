@@ -10,11 +10,12 @@ import { useNavigate } from 'react-router-dom';
 import useAuth from '../../Hooks/useAuth';
 import { useEffect } from 'react';
 
-const login = 'https://techforing.com/tfimg/logo.png';
+const logo = 'https://techforing.com/tfimg/logo.png';
 
 export default function Login() {
     const [formField, setFormField] = React.useState('signup');
     const [loginData, setLoginData] = React.useState({});
+
     const { loading, error, user, login } = useAuth();
     const navigate = useNavigate();
 
@@ -113,28 +114,34 @@ export default function Login() {
                                             onSubmit={handleLoginSubmit}
                                             noValidate
                                             sx={{ mt: 1 }}>
-                                            <TextField
-                                                margin='normal'
-                                                required
-                                                fullWidth
-                                                id='email'
-                                                label='Email'
-                                                onChange={handleOnChange}
-                                                name='email'
-                                                autoComplete='email'
-                                                autoFocus
-                                            />
-                                            <TextField
-                                                margin='normal'
-                                                required
-                                                fullWidth
-                                                name='password'
-                                                label='Password'
-                                                onChange={handleOnChange}
-                                                type='password'
-                                                id='password'
-                                                autoComplete='current-password'
-                                            />
+                                            <Grid container spacing={2}>
+                                                <Grid item xs={12}>
+                                                    <TextField
+                                                        margin='normal'
+                                                        required
+                                                        fullWidth
+                                                        id='email'
+                                                        label='Email'
+                                                        onChange={handleOnChange}
+                                                        name='email'
+                                                        autoComplete='email'
+                                                        autoFocus
+                                                    />
+                                                </Grid>
+                                                <Grid item xs={12}>
+                                                    <TextField
+                                                        margin='normal'
+                                                        required
+                                                        fullWidth
+                                                        name='password'
+                                                        label='Password'
+                                                        onChange={handleOnChange}
+                                                        type='password'
+                                                        id='password'
+                                                        autoComplete='current-password'
+                                                    />
+                                                </Grid>
+                                            </Grid>
                                             <Button
                                                 type='submit'
                                                 variant='contained'
@@ -144,6 +151,7 @@ export default function Login() {
                                                     ? 'Loading...'
                                                     : 'Sign In'}
                                             </Button>
+
                                         </Box>
                                     </Container>
                                 </>
@@ -163,7 +171,7 @@ export default function Login() {
                         <Box container>
                             <img
                                 style={{ maxWidth: '50%' }}
-                                src={login}
+                                src={logo}
                                 alt=''
                             />
                             <Typography

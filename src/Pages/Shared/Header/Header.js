@@ -15,31 +15,31 @@ import AccountCircle from '@mui/icons-material/AccountCircle';
 import MailIcon from '@mui/icons-material/Mail';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
+import useAuth from '../../../Hooks/useAuth';
+import { Button } from '@mui/material';
 
 
 export default function Header() {
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
-
     const isMenuOpen = Boolean(anchorEl);
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
-
     const handleProfileMenuOpen = (event) => {
         setAnchorEl(event.currentTarget);
     };
-
     const handleMobileMenuClose = () => {
         setMobileMoreAnchorEl(null);
     };
-
     const handleMenuClose = () => {
         setAnchorEl(null);
         handleMobileMenuClose();
     };
-
     const handleMobileMenuOpen = (event) => {
         setMobileMoreAnchorEl(event.currentTarget);
     };
+
+    // 
+    const { logOut, user } = useAuth();
 
     const menuId = 'primary-search-account-menu';
     const renderMenu = (
@@ -60,6 +60,7 @@ export default function Header() {
         >
             <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
             <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+            <Button variant="outlined" color="error" onClick={logOut} >Logout</Button>
         </Menu>
     );
 
@@ -105,7 +106,10 @@ export default function Header() {
                 </IconButton>
                 <p>Profile</p>
             </MenuItem>
+
         </Menu>
+
+
     );
 
     return (
@@ -119,7 +123,7 @@ export default function Header() {
                         component="div"
                         sx={{ display: { sm: 'block' } }}
                     >
-                        MUI
+                        TechForing
                     </Typography>
 
                     <Box sx={{ flexGrow: 1 }} />

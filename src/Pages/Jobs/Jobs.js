@@ -4,10 +4,13 @@ import { styled } from '@mui/material/styles';
 import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 import TableRow from '@mui/material/TableRow';
 import { Box } from '@mui/system';
-import { Button, Paper, Table, TableBody, TableContainer, TableHead } from '@mui/material';
+import { Button, Paper, Table, TableBody, TableContainer, TableHead, Typography } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import ModeEditIcon from '@mui/icons-material/ModeEdit';
 import VisibilityIcon from '@mui/icons-material/Visibility';
+import useAuth from '../../Hooks/useAuth';
+import CreateJobs from '../Home/CreateJobs/CreateJobs';
+import useJob from '../../Hooks/useJob'
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -42,10 +45,21 @@ const rows = [
 ];
 
 const Jobs = () => {
+    const { user } = useAuth();
+    const { getJob } = useJob()
+
+    const [open, setOpen] = React.useState(false);
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
+
+
     return (
         <div>
             <Header />
-            <h2>This is jobs</h2>
+            <Box sx={{ m: 10 }}>
+                <Typography component='h1' variant='h5' sx={{ my: 4 }}>This is jobs</Typography>
+                <Button onClick={handleOpen}>Create Jobs</Button>
+            </Box>
             <Box
                 sx={{
                     mx: 5
@@ -104,7 +118,13 @@ const Jobs = () => {
                         </TableBody>
                     </Table>
                 </TableContainer>
+                <CreateJobs
+                    handleOpen={handleOpen}
+                    handleClose={handleClose}
+                    open={open}
+                ></CreateJobs>
             </Box>
+
         </div>
     );
 };

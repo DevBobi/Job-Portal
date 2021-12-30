@@ -10,20 +10,26 @@ import Badge from '@mui/material/Badge';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
-import SearchIcon from '@mui/icons-material/Search';
 import AccountCircle from '@mui/icons-material/AccountCircle';
-import MailIcon from '@mui/icons-material/Mail';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import useAuth from '../../../Hooks/useAuth';
 import { Button } from '@mui/material';
-
+import { useNavigate } from 'react-router-dom';
 
 export default function Header() {
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
     const isMenuOpen = Boolean(anchorEl);
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+    const { logOut, user } = useAuth();
+    const navigate = useNavigate()
+
+    const handleLogout = () => {
+        logOut()
+        navigate('/')
+    }
+
     const handleProfileMenuOpen = (event) => {
         setAnchorEl(event.currentTarget);
     };
@@ -37,9 +43,6 @@ export default function Header() {
     const handleMobileMenuOpen = (event) => {
         setMobileMoreAnchorEl(event.currentTarget);
     };
-
-    // 
-    const { logOut, user } = useAuth();
 
     const menuId = 'primary-search-account-menu';
     const renderMenu = (
@@ -60,7 +63,7 @@ export default function Header() {
         >
             <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
             <MenuItem onClick={handleMenuClose}>My account</MenuItem>
-            <Button variant="outlined" color="error" onClick={logOut} >Logout</Button>
+            <Button variant="outlined" color="error" onClick={handleLogout} >Logout</Button>
         </Menu>
     );
 

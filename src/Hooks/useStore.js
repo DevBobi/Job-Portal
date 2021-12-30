@@ -14,7 +14,7 @@ const useStore = () => {
             setUser(data);
             localStorage.setItem('auth', JSON.stringify(data));
         } catch (error) {
-            parseInt(error.response.status) === 401 ?
+            parseInt(error?.response?.status) === 401 ?
                 setError('Unauthorized user, Please try again!') : setError('Something went wrong!')
         } finally {
             setLoading(false);
@@ -29,7 +29,7 @@ const useStore = () => {
             const result = await Axios.post('/register/', data);
         } catch (error) {
             const first = Object.keys(error.response?.data)[0];
-            setError(error.response.data[first][0]);
+            setError(error?.response?.data[first][0]);
         } finally {
             setLoading(false);
         }

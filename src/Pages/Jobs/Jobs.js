@@ -10,7 +10,8 @@ import ModeEditIcon from '@mui/icons-material/ModeEdit';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import useAuth from '../../Hooks/useAuth';
 import CreateJobs from '../Home/CreateJobs/CreateJobs';
-import useJob from '../../Hooks/useJob'
+import useJob from '../../Hooks/useJob';
+import AddCircleIcon from '@mui/icons-material/AddCircle';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -46,7 +47,7 @@ const rows = [
 
 const Jobs = () => {
     const { user } = useAuth();
-    const { getJob } = useJob()
+    const { getJob } = useJob();
 
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
@@ -57,8 +58,8 @@ const Jobs = () => {
         <div>
             <Header />
             <Box sx={{ m: 10 }}>
-                <Typography component='h1' variant='h5' sx={{ my: 4 }}>This is jobs</Typography>
-                <Button onClick={handleOpen}>Create Jobs</Button>
+                <Typography component='h1' variant='h5' sx={{ my: 4 }}>This is job</Typography>
+                <Button variant="contained" color="success" onClick={handleOpen}><AddCircleIcon />{" "} Create Jobs</Button>
             </Box>
             <Box
                 sx={{

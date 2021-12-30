@@ -7,6 +7,8 @@ import TableRow from '@mui/material/TableRow';
 import { Button, CircularProgress, Paper, Table, TableBody, TableContainer } from '@mui/material';
 import { NavLink } from 'react-router-dom';
 import useJob from '../../Hooks/useJob';
+import { useState } from 'react';
+import UpdateJobs from '../Home/UpdateJobs/UpdateJobs';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -29,39 +31,47 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 const Single = ({ row, deleteJob }) => {
-
+    const [open, setOpen] = useState(false);
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
 
     return (
-        <StyledTableRow key={row.jobTitle}>
-            <StyledTableCell> {row.jobTitle} </StyledTableCell>
-            <StyledTableCell>{row.calories}</StyledTableCell>
-            <StyledTableCell align="center">{row.vacancies}</StyledTableCell>
-            <StyledTableCell align="right">{row.shift}</StyledTableCell>
-            <StyledTableCell align="right">{row.jobType}</StyledTableCell>
-            <StyledTableCell align="right">{row.lastDateOfApply}</StyledTableCell>
-            <StyledTableCell align="right">
-                <Button
-                    // onClick={() => handleDelete(row?._id)}
-                    size='small'
-                    color='success'>
-                    <ModeEditIcon />
-                </Button>
-                <Button
-                    onClick={() => deleteJob(row?.id)}
-                    size='small'
-                    color='error'>
-                    <DeleteIcon />
-                </Button>
-                <NavLink to='/viewJobs' style={{ textDecoration: 'none' }}>
+        <div>
+            <StyledTableRow key={row.jobTitle}>
+                <StyledTableCell> {row.jobTitle} </StyledTableCell>
+                <StyledTableCell>{row.calories}</StyledTableCell>
+                <StyledTableCell align="center">{row.vacancies}</StyledTableCell>
+                <StyledTableCell align="right">{row.shift}</StyledTableCell>
+                <StyledTableCell align="right">{row.jobType}</StyledTableCell>
+                <StyledTableCell align="right">{row.lastDateOfApply}</StyledTableCell>
+                <StyledTableCell align="right">
                     <Button
-                        // onClick={() => handleDelete(row?.id)}
+                        onClick={handleOpen}
                         size='small'
-                        color='info'>
-                        <VisibilityIcon />
+                        color='success'>
+                        <ModeEditIcon />
                     </Button>
-                </NavLink>
-            </StyledTableCell>
-        </StyledTableRow>
+                    <Button
+                        onClick={() => deleteJob(row?.id)}
+                        size='small'
+                        color='error'>
+                        <DeleteIcon />
+                    </Button>
+                    <NavLink to='/viewJobs' style={{ textDecoration: 'none' }}>
+                        <Button
+                            // onClick={() => handleDelete(row?.id)}
+                            size='small'
+                            color='info'>
+                            <VisibilityIcon />
+                        </Button>
+                    </NavLink>
+                </StyledTableCell>
+            </StyledTableRow>
+            <UpdateJobs
+                handleClose={handleClose}
+                open={open}
+            ></UpdateJobs>
+        </div>
     );
 };
 

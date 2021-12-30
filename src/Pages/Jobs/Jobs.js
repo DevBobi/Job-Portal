@@ -5,15 +5,10 @@ import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 import TableRow from '@mui/material/TableRow';
 import { Box } from '@mui/system';
 import { Button, CircularProgress, Paper, Table, TableBody, TableContainer, TableHead, Typography } from '@mui/material';
-import DeleteIcon from '@mui/icons-material/Delete';
-import ModeEditIcon from '@mui/icons-material/ModeEdit';
-import VisibilityIcon from '@mui/icons-material/Visibility';
-import useAuth from '../../Hooks/useAuth';
 import CreateJobs from '../Home/CreateJobs/CreateJobs';
 import useJob from '../../Hooks/useJob';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import Single from './Single';
-
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -27,8 +22,6 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
 
 const Jobs = () => {
     const { job, deleteJob } = useJob();
-
-    console.log(job)
 
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
@@ -71,9 +64,7 @@ const Jobs = () => {
                     handleClose={handleClose}
                     open={open}
                 ></CreateJobs>
-
             </Box>
-
         </div>
     );
 };

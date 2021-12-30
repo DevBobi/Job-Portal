@@ -1,30 +1,25 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Axios from '../Utils/axios';
 
 const useJob = () => {
-    const [job, setJob] = useState();
+    const [job, setJob] = useState([]);
     const [error, setError] = useState();
     const [loading, setLoading] = useState();
     const [success, setSuccess] = useState(false);
 
-    const getJob = async () => {
-        setLoading(true);
-        try {
-            const result = await Axios.get('/job_post/');
-            setJob(result.data);
-        } catch (e) {
-            setError(error?.response?.data);
-        } finally {
-            setLoading(false);
-        }
-    };
+    useEffect(() => {
+        setLoading(true)
+        Axios.get('/job_post/')
+            .then(({ data }) => setJob(data))
+            .catch(err => setError(error?.response?.data))
+            .finally(() => setLoading(false))
+    }, [])
 
     const postJob = async (data) => {
         setLoading(true);
         setSuccess(false);
         try {
             const result = await Axios.post('/job_post/', data);
-            console.log(result.data);
             setSuccess('success');
         } catch (e) {
             setError(error?.response?.data);
@@ -37,8 +32,7 @@ const useJob = () => {
         setSuccess(false);
         setLoading(true);
         try {
-            const result = await Axios.put(`/${id}/`, {});
-            console.log(result.data);
+            const result = await Axios.put(`/job_update/${id}/`, { id });
             setSuccess(true);
         } catch (e) {
             setError(error?.response?.data);
@@ -51,8 +45,11 @@ const useJob = () => {
         setSuccess(false);
         setLoading(true);
         try {
-            const result = await Axios.delete(`/${id}/`);
+            const result = await Axios.delete(`/job_update/${id}/`);
             setSuccess(true);
+            const filteredData = job.filter((item) => item.id !== id)
+            setJob(filteredData);
+
         } catch (e) {
             setError(error?.response?.data);
         } finally {
@@ -67,7 +64,6 @@ const useJob = () => {
         loading,
         error,
         success,
-        getJob,
         postJob,
         updateJob,
         deleteJob,

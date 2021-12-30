@@ -1,8 +1,10 @@
 import React from 'react';
 import Box from '@mui/material/Box';
-import { Button, Container, Typography } from '@mui/material';
+import { Typography } from '@mui/material';
+import { useParams } from 'react-router';
 
 const ViewJobs = () => {
+    const { id } = useParams();
     return (
         <div>
             <Box sx={{ overflow: "hidden" }}>
@@ -11,8 +13,8 @@ const ViewJobs = () => {
                     Job Titile
                 </Typography>
 
-                <Typography container variant="h6" sx={{ my: 3, fontSize: 13, fontWeigth: 300, color: 'gray' }}>
-                    Whether you call them shoes, sneakers, runners, trainers, or kicks, we have you covered with the latest footwear to fit your style.
+                <Typography container variant="h4" sx={{ my: 3 }}>
+                    Single Jobs
                 </Typography>
 
             </Box>

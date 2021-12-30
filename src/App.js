@@ -31,7 +31,7 @@ function App() {
             <Jobs />
           </PrivateRoute>}>
           </Route>
-          <Route path="/viewJobs" element={<PrivateRoute>
+          <Route path="/viewJobs/:id" element={<PrivateRoute>
             <ViewJobs />
           </PrivateRoute>}>
           </Route>

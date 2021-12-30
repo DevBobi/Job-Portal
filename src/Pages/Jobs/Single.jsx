@@ -6,6 +6,7 @@ import { styled } from '@mui/material/styles';
 import TableRow from '@mui/material/TableRow';
 import { Button, CircularProgress, Paper, Table, TableBody, TableContainer } from '@mui/material';
 import { NavLink } from 'react-router-dom';
+import useJob from '../../Hooks/useJob';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -27,8 +28,9 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
     },
 }));
 
-const Single = ({ row }) => {
-    console.log(row);
+const Single = ({ row, deleteJob }) => {
+
+
     return (
         <StyledTableRow key={row.jobTitle}>
             <StyledTableCell> {row.jobTitle} </StyledTableCell>
@@ -45,14 +47,14 @@ const Single = ({ row }) => {
                     <ModeEditIcon />
                 </Button>
                 <Button
-                    // onClick={() => handleDelete(row?._id)}
+                    onClick={() => deleteJob(row?.id)}
                     size='small'
                     color='error'>
                     <DeleteIcon />
                 </Button>
                 <NavLink to='/viewJobs' style={{ textDecoration: 'none' }}>
                     <Button
-                        // onClick={() => handleDelete(row?._id)}
+                        // onClick={() => handleDelete(row?.id)}
                         size='small'
                         color='info'>
                         <VisibilityIcon />

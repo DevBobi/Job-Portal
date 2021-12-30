@@ -26,22 +26,19 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
 }));
 
 const Jobs = () => {
-    const { user } = useAuth();
-    const { job, getJob } = useJob();
-    console.log(job)
+    const { job, deleteJob } = useJob();
 
-    React.useEffect(() => getJob(), [])
+    console.log(job)
 
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
 
-
     return (
         <div>
             <Header />
             <Box sx={{ m: 10 }}>
-                <Typography component='h1' variant='h5' sx={{ my: 4 }}>This is job</Typography>
+                <Typography component='h1' variant='h5' sx={{ my: 4 }}>Please Create A New Job Post</Typography>
                 <Button variant="contained" color="success" onClick={handleOpen}><AddCircleIcon />{" "} Create Jobs</Button>
             </Box>
             <Box
@@ -63,8 +60,8 @@ const Jobs = () => {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {job ? job.map((item) => (
-                                <Single row={item} />
+                            {job.length > 0 ? job.map((item) => (
+                                <Single deleteJob={deleteJob} row={item} />
                             )) : <CircularProgress />}
                         </TableBody>
                     </Table>
@@ -74,6 +71,7 @@ const Jobs = () => {
                     handleClose={handleClose}
                     open={open}
                 ></CreateJobs>
+
             </Box>
 
         </div>

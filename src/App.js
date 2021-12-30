@@ -10,6 +10,7 @@ import Jobs from './Pages/Jobs/Jobs';
 import PrivateRoute from './Pages/Shared/PrivateRoute/PrivateRoute';
 import { useEffect } from 'react';
 import useAuth from './Hooks/useAuth';
+import ViewJobs from './Pages/Home/ViewJobs/ViewJobs';
 
 
 function App() {
@@ -28,6 +29,10 @@ function App() {
           </Route>
           <Route path="/jobs" element={<PrivateRoute>
             <Jobs />
+          </PrivateRoute>}>
+          </Route>
+          <Route path="/viewJobs" element={<PrivateRoute>
+            <ViewJobs />
           </PrivateRoute>}>
           </Route>
         </Routes>

@@ -10,10 +10,10 @@ const useJob = () => {
     const getJob = async () => {
         setLoading(true);
         try {
-            const result = Axios.get('/job_post/');
+            const result = await Axios.get('/job_post/');
             setJob(result.data);
         } catch (e) {
-            setError(error.response.data);
+            setError(error?.response?.data);
         } finally {
             setLoading(false);
         }

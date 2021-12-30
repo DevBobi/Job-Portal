@@ -6,7 +6,7 @@ Project run procedure:
 To run this project simply clone the repository in your local machine. 
 
 ### `npm install`
-Then write npm install and the yarn start
+Then write npm install
 
 ### `npm start`
-And the write npm-start.
+Finally npm start to see live preview.
